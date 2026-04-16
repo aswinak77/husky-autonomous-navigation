@@ -55,6 +55,6 @@ python main.py
 
 * Left click → set Start
 * Left click again → set Goal
-* Right click → reset
+* click 'r'  → reset
 
 4. Simulation will start automatically
