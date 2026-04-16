@@ -53,14 +53,8 @@ python main.py
 
 3. In the GUI:
 
-*Left click → set Start
+* Left click → set Start
 * Left click again → set Goal
 * Right click → reset
 
-4. Simulation will start automatically.
-
-
-
-## Author
-
-Aswin Krishna
+4. Simulation will start automatically
