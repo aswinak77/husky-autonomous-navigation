@@ -29,9 +29,11 @@ The system combines path planning, obstacle avoidance, and real-time control to 
 
 ### Python Dependencies
 
-Install using:
+*If you prefer to run directly using system Python, install compatible versions:
 
-pip install pybullet opencv-python numpy
+ pip3 install numpy==1.24.4
+ pip3 install pybullet==3.2.5
+ pip3 install opencv-python
 
 Or using a virtual environment (recommended):
 
