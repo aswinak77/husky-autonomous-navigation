@@ -31,7 +31,7 @@ class GUI:
 
         self.grid = np.zeros((grid_size, grid_size), dtype=np.uint8)
         self._add_default_obstacles()
-        self.grid = self._inflate_obstacles(self.grid, padding=1)
+        self.grid = self._inflate_obstacles(self.grid, padding=2)
 
         self.window_name = "Husky Navigator - Grid GUI"
 
