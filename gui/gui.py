@@ -10,7 +10,6 @@ class GUI:
     # World-space cell size in meters
     WORLD_SCALE = 0.5
 
-    # ---- colours (BGR) ----------------
     C_BACKGROUND = (245, 245, 245)
     C_GRID       = (200, 200, 200)
     C_OBSTACLE   = (40,  40,  40)
@@ -18,7 +17,6 @@ class GUI:
     C_GOAL       = (30,  30,  220)
     C_PATH       = (200, 160, 0)
     C_TEXT       = (50,  50,  50)
-    # -----------------------------------
 
     def __init__(self, grid_size: int = GRID_SIZE, cell_size: int = CELL_SIZE):
         self.grid_size  = grid_size
@@ -54,6 +52,12 @@ class GUI:
             frame = self._render()
             cv2.imshow(self.window_name, frame)
             key = cv2.waitKey(16) & 0xFF
+
+            # detect window close
+            if cv2.getWindowProperty(self.window_name, cv2.WND_PROP_VISIBLE) < 1:
+                print("[GUI] Window closed by user")
+                cv2.destroyAllWindows()
+                return None, None, None
 
             if key == 27:  # ESC
                 cv2.destroyAllWindows()
