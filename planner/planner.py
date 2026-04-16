@@ -72,7 +72,7 @@ def plan_path(start, goal, grid):
                    grid[current[0], current[1] + dc] == 1:
                     continue
 
-            penalty = obstacle_cost[neighbor] * 5.0
+            penalty = obstacle_cost[neighbor] * 8.0
 
             tentative_g = g_cost[current] + step_cost + penalty
 
