@@ -3,11 +3,9 @@ import numpy as np
 
 
 class GUI:
-    # grid/displa parameters
     GRID_SIZE  = 30
     CELL_SIZE  = 20
 
-    # World-space cell size in meters
     WORLD_SCALE = 0.5
 
     C_BACKGROUND = (245, 245, 245)
@@ -59,9 +57,16 @@ class GUI:
                 cv2.destroyAllWindows()
                 return None, None, None
 
-            if key == 27:  # ESC
+            # ESC to exit
+            if key == 27:
                 cv2.destroyAllWindows()
                 return None, None, self.grid
+
+            if key == ord('r'):
+                self.start = None
+                self.goal  = None
+                self.path  = []
+                print("Selection reset.")
 
             if self.start is not None and self.goal is not None:
                 for _ in range(30):
@@ -101,12 +106,10 @@ class GUI:
         cs = self.cell_size
         img = np.full((self.px, self.px, 3), self.C_BACKGROUND, dtype=np.uint8)
 
-        # Grid lines
         for i in range(self.grid_size + 1):
             cv2.line(img, (0, i*cs), (self.px, i*cs), self.C_GRID, 1)
             cv2.line(img, (i*cs, 0), (i*cs, self.px), self.C_GRID, 1)
 
-        # Obstacles
         for r in range(self.grid_size):
             for c in range(self.grid_size):
                 if self.grid[r, c] == 1:
@@ -115,31 +118,27 @@ class GUI:
                                   ((c+1)*cs, (r+1)*cs),
                                   self.C_OBSTACLE, -1)
 
-        # Path
         for (r, c) in self.path:
             cx = c*cs + cs//2
             cy = r*cs + cs//2
             cv2.circle(img, (cx, cy), max(2, cs//5), self.C_PATH, -1)
 
-        # Start
         if self.start:
             r, c = self.start
             cv2.rectangle(img, (c*cs, r*cs), ((c+1)*cs, (r+1)*cs), self.C_START, -1)
             cv2.putText(img, "S", (c*cs+3, (r+1)*cs-3),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255,255,255), 1)
 
-        # Goal
         if self.goal:
             r, c = self.goal
             cv2.rectangle(img, (c*cs, r*cs), ((c+1)*cs, (r+1)*cs), self.C_GOAL, -1)
             cv2.putText(img, "G", (c*cs+3, (r+1)*cs-3),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255,255,255), 1)
 
-        # Status bar
         if self.start is None:
             status = "Left click to set START"
         elif self.goal is None:
-            status = "Left click to set GOAL | Right-click to reset"
+            status = "Left click to set GOAL | Press R to reset"
         else:
             status = "Starting simulation."
 
@@ -167,9 +166,3 @@ class GUI:
             elif self.goal is None:
                 self.goal = (r, c)
                 print(f"Goal set: row={r}, col={c}")
-
-        elif event == cv2.EVENT_RBUTTONDOWN:
-            self.start = None
-            self.goal  = None
-            self.path  = []
-            print("Selection reset.")
